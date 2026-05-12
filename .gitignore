@@ -5,5 +5,5 @@
 /pipeline_guide.md
 /scripts
 /urls.jsonl
-/state/chunk_schema.jsonl
-/state/colab_done.jsonl
+state/chunk_schema.json
+state/colab_done.jsonl

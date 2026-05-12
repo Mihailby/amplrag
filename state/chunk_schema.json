@@ -15,7 +15,7 @@
     "token_estimate",
     "text",
     "text_clean"
-  ],
+  ], 
   "properties": {
     "chunk_id": {
       "type": "string",
