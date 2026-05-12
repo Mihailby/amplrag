@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ampl-kb-chunk-schema",
+  "title": "AMPL Knowledge Base Chunk Record",
+  "description": "One retrieval chunk produced by scripts/chunk.py from a docs/*.md file.",
+  "type": "object",
+  "required": [
+    "chunk_id",
+    "document_id",
+    "title",
+    "source_url",
+    "content_type",
+    "headings",
+    "doc_area",
+    "token_estimate",
+    "text",
+    "text_clean"
+  ],
+  "properties": {
+    "chunk_id": {
+      "type": "string",
+      "description": "Unique stable identifier: {document_id}#{heading-slug}[-N]. Example: 01-introduction-to-ampl.1.1-what-is-ampl#ampl-syntax",
+      "pattern": "^[a-z0-9][a-z0-9.\\-]*#[a-z0-9\\-]+"
+    },
+    "document_id": {
+      "type": "string",
+      "description": "Stable identifier for the source file, derived from its path relative to docs/. Dots replace directory separators. Example: 01-introduction-to-ampl.1.1-what-is-ampl",
+      "pattern": "^[a-z0-9][a-z0-9.\\-]*$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title. Taken from frontmatter 'title'; falls back to the lowest heading in the chunk's heading stack."
+    },
+    "source_url": {
+      "oneOf": [
+        {"type": "string", "description": "Single source URL."},
+        {"type": "array",  "items": {"type": "string"}, "description": "Multiple source URLs when the document consolidates several pages."}
+      ],
+      "description": "Canonical URL(s) of the original source page(s). Empty string if the document has no known source URL."
+    },
+    "language": {
+      "type": "string",
+      "description": "Programming language context, if applicable.",
+      "enum": ["python", "r", "matlab", "java", "csharp", "julia", "ampl", ""]
+    },
+    "version": {
+      "type": "string",
+      "description": "Doc version string, e.g. '2.x'. Empty string if not specified."
+    },
+    "content_type": {
+      "type": "string",
+      "description": "Retrieval category that governs token budgets and chunking behaviour.",
+      "enum": ["conceptual", "api_reference"]
+    },
+    "headings": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Heading breadcrumb from document root to this chunk's section. Empty array for pre-heading content. Example: ['1.1 What is AMPL', 'AMPL syntax', 'Parameters']"
+    },
+    "symbols": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Identifiers found in the source document (class names, method names, AMPL keywords, solver option keys). Inherited from the parent document's frontmatter."
+    },
+    "doc_area": {
+      "type": "string",
+      "description": "Top-level documentation category. Matches doc_structure.md taxonomy.",
+      "examples": ["ampl-language", "amplpy", "solver-options", "solver-guides", "mo-book", "r-api", "forum-qa"]
+    },
+    "doc_sub_area": {
+      "type": "string",
+      "description": "Optional refinement of doc_area. Empty string when not applicable."
+    },
+    "summary": {
+      "type": "string",
+      "description": "One to three sentence retrieval summary of the source document. Inherited from frontmatter; empty string if not set."
+    },
+    "needs_review": {
+      "type": "boolean",
+      "description": "True when the AI pipeline flagged truncation, garbled structure, or missing content in the source document."
+    },
+    "token_estimate": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Estimated token count of text_clean. Computed with tiktoken cl100k_base when available; falls back to len(text_clean)//4."
+    },
+    "text": {
+      "type": "string",
+      "description": "Retrieval-optimised text. Prepends '[Heading > Stack]' breadcrumb context, then overlap prefix from the previous chunk (if any), then text_clean. Use this field as the embedding input."
+    },
+    "text_clean": {
+      "type": "string",
+      "description": "Raw chunk content without heading context or overlap prefix. Use this field when displaying the chunk to an LLM or user."
+    }
+  },
+  "additionalProperties": false,
+
+  "examples": [
+    {
+      "chunk_id": "01-introduction-to-ampl.1.1-what-is-ampl#ampl-syntax",
+      "document_id": "01-introduction-to-ampl.1.1-what-is-ampl",
+      "title": "What is AMPL — language philosophy and design goals",
+      "source_url": "https://dev.ampl.com/ampl/introduction.html",
+      "language": "",
+      "version": "",
+      "content_type": "conceptual",
+      "headings": ["1.1 What is AMPL — language philosophy and design goals", "AMPL syntax"],
+      "symbols": ["AMPL", "set", "param", "var", "minimize", "maximize", "subject to"],
+      "doc_area": "intro",
+      "doc_sub_area": "",
+      "summary": "AMPL is a high-level algebraic modeling language …",
+      "needs_review": false,
+      "token_estimate": 230,
+      "text": "[1.1 What is AMPL … > AMPL syntax]\n\nAn AMPL model describes …",
+      "text_clean": "An AMPL model describes the same mathematical structure …"
+    },
+    {
+      "chunk_id": "solver-guides.gurobi.options#algorithm-alg",
+      "document_id": "solver-guides.gurobi.options",
+      "title": "Gurobi options",
+      "source_url": "https://dev.ampl.com/solvers/gurobi/options.html",
+      "language": "",
+      "version": "",
+      "content_type": "api_reference",
+      "headings": ["Gurobi options", "Algorithm (alg:)"],
+      "symbols": ["gurobi_options", "alg:method", "alg:feastol"],
+      "doc_area": "solver-options",
+      "doc_sub_area": "integer",
+      "summary": "Partial reference for Gurobi MP-driver options …",
+      "needs_review": true,
+      "token_estimate": 185,
+      "text": "[Gurobi options > Algorithm (alg:)]\n\n| Option | Default | Description |\n…",
+      "text_clean": "| Option | Default | Description |\n…"
+    }
+  ]
+}
