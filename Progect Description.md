@@ -39,4 +39,4 @@ Answer quality and speed depend on the user LLM platform, model, embedding model
 
 **Contact (optional)**
 
-For questions, corrections, or references, contact Mikhail at `mikhail@ampl.com`. 
+For questions, corrections, or references, contact at `mikhail@ampl.com`. 
