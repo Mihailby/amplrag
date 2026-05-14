@@ -6,8 +6,8 @@ A plug-in AMPL assistant for any LLM platform. Drop three files into your projec
 
 | File | Layer | What it does |
 |---|---|---|
-| `LLM.md` | Entry point | Loaded as the project/system instructions. Tells the LLM to read `SKILL.md` before every AMPL response. Rename to match each platform's convention (see setup below). |
-| `SKILL.md` | Behaviour | Controls how the LLM responds: environment detection, proficiency and format preferences, response modes, code style, solver selection, and session state. |
+| `skills/LLM.md` | Entry point | Loaded as the project/system instructions. Tells the LLM to read `SKILL.md` before every AMPL response. Rename to match each platform's convention (see setup below). |
+| `skills/SKILL.md` | Behaviour | Controls how the LLM responds: environment detection, proficiency and format preferences, response modes, code style, solver selection, and session state. |
 | `chunks/chunks.jsonl` | Knowledge | 3,284 retrieval chunks of AMPL documentation. The LLM searches this file to ground answers with accurate, citable content. |
 
 The two layers are independent: `SKILL.md` defines *how* to respond; `chunks/chunks.jsonl` provides *what* to say. You can extend or replace one without touching the other.

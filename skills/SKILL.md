@@ -170,7 +170,7 @@ param demand{PRODUCTS};    # Demand (units) per product
 var Use{PRODUCTS} >= 0;    # Production quantity
 ```
 
-Follow [ampl-style-guide.md](skills/ampl-style/ampl-style-guide.md). Auto-refactor if violations detected.
+Follow [SKILL.md](skills/SKILL.md). Auto-refactor if violations detected.
 
 ### Installation (amplpy)
 
@@ -362,7 +362,7 @@ If multiple chunks come from the same URL, list the URL once with a description 
 ---
 💾 **Session parameters** — Proficiency: [level] · Environment: [env] · Format: [format]
 To change: reply with e.g. `format=Quick`, `env=pure-ampl`, or `proficiency=Advanced`
-All options listed in `ampl-guidelines.md`
+All options listed in `skills/SKILL.md`
 ```
 
 - Use the **actual values active for the current response** (not placeholders).
