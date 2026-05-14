@@ -1,0 +1,6 @@
+interface:
+  name: ampl-llm-optimization-advisor
+  display_name: "AMPL LLM Optimization Advisor"
+  short_description: "AMPL and amplpy modeling guidance"
+  default_prompt: "Use $ampl-llm-optimization-advisor to answer AMPL and optimization questions."
+  
