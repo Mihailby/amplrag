@@ -9,3 +9,4 @@ state/chunk_schema.json
 state/colab_done.jsonl
 chunk_schema.json
 colab_done.jsonl
+state/chunks.jsonl.bak
