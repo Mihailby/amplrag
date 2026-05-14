@@ -45,7 +45,9 @@ Response
 
 ### Claude Code
 
-In accordance with the Claude Code convention for project instructions, rename the file `LLM.md` to `CLAUDE.md`.
+In accordance with the Claude Code convention for project instructions, rename
+`LLM.md` to `CLAUDE.md`, or append the contents of `LLM.md` to an existing
+`CLAUDE.md`.
 
 1. Open this folder in Claude Code.
 2. Start asking AMPL questions — no further setup needed.
@@ -54,12 +56,44 @@ In accordance with the Claude Code convention for project instructions, rename t
 
 ### MCPMarket
 
-This package uses an external AMPL documentation corpus because MCPMarket limits
-individual uploaded files to 500 KB.
+The MCPMarket skill package should include the instruction files only. The AMPL
+documentation corpus is hosted externally because MCPMarket limits individual
+uploaded files to 500 KB.
 
 - Corpus URL: https://raw.githubusercontent.com/Mihailby/amplskills/main/chunks/chunks.jsonl
 - Size: 9,482,250 bytes
 - SHA-256: 4C378E141F0ADB6DE8197FAEABADF7E90409416C88D5A5BE66F2C2B5B7C498CF
+
+Recommended MCPMarket package contents:
+
+```text
+SKILL.md
+LLM.md
+```
+
+Do not upload `chunks/chunks.jsonl` directly to MCPMarket. Instead, include the
+corpus URL and checksum in the skill description or frontmatter metadata so users
+and agents can verify the file before indexing it.
+
+For users:
+
+1. Install the `ampl-optimization-guide` skill from MCPMarket.
+2. Download `chunks.jsonl` from the corpus URL above.
+3. Verify the SHA-256 checksum if your tool supports checksum validation.
+4. Put the file at `chunks/chunks.jsonl`, or configure your RAG/vector store to
+   index the downloaded JSONL file.
+5. Ask AMPL, amplpy, or optimization questions. The skill controls response
+   behavior, and `chunks.jsonl` provides documentation-grounded retrieval.
+
+For maintainers:
+
+1. Keep the marketplace name as `AMPL Optimization Guide`.
+2. Keep the slug/package name stable, for example `ampl-optimization-guide`.
+3. Use the raw GitHub URL, not a GitHub `/tree/` or `/blob/` page URL.
+4. Update the size and SHA-256 checksum whenever `chunks.jsonl` changes.
+5. If MCPMarket later supports larger files or multiple knowledge files, the same
+   corpus can be bundled directly or split into shard files under the upload
+   limit.
 
 ---
 
