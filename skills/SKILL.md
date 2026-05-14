@@ -1,6 +1,6 @@
 # AMPL & Optimization Guidelines
 
-This file provides specialized guidance for optimization work using AMPL and amplpy. For general Claude Code behavior, see `CLAUDE.md`.
+This file provides specialized guidance for optimization work using AMPL and amplpy. For general LLM behavior, see `LLM.md`.
 
 ---
 
